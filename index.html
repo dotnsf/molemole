@@ -175,7 +175,8 @@ function canGo( nx, ny ){
 function go( nx, ny ){
   //. 上に石があった場合は落ちてくる
   var idx = 1;
-  while( my > ( idx - 1 ) && current_board[my-idx][mx] == 4 ){
+  //while( my > ( idx - 1 ) && current_board[my-idx][mx] == 4 ){
+  if( my > ( idx - 1 ) && current_board[my-idx][mx] == 4 ){
     current_board[my-idx][mx] = 0;
     current_board[my-idx+1][mx] = 4;
     idx ++;
