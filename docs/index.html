@@ -23,6 +23,16 @@ html, body{
 }
 </style>
 <script>
+/*
+| # | 意味 |
+|---|----------------|
+| 0 | なにもない空間 |
+| 1 | ドア（ゴール） |
+| 2 | はしご　　　　 |
+| 3 | 土　　　　　　 |
+| 4 | 石　　　　　　 |
+| 5 | いも　　　　　 |
+*/
 var board = [
   [
     [ 0, 0, 0, 1 ],
@@ -72,11 +82,45 @@ var step = 0;
 var pts = 0;
 var mx = 0;
 var my = 0;
+var imgs = new Array(7);
 $(function(){
   //. リサイズ時に Canvas サイズを変更する
   $(window).on( 'load resize', function(){
     resized();
   });
+
+  for( var i = 0; i < imgs.length; i ++ ){
+    imgs[i] = new Image();
+    switch( i ){
+    case 0:
+      imgs[i].src = '';
+      break;
+    case 1:
+      //. いろいろな状態のドアのイラスト https://www.irasutoya.com/2016/07/blog-post_832.html
+      imgs[i].src = 'https://2.bp.blogspot.com/-6noe-4G5FNU/V2ubhr0UDKI/AAAAAAAA7pY/nHp2zGXHshkiwzUxYa5RQVf-pcwn31GSACLcB/s800/door_half_open.png';
+      break;
+    case 2:
+      //. 木のはしごのイラスト https://www.irasutoya.com/2018/12/blog-post_0.html
+      imgs[i].src = 'https://4.bp.blogspot.com/-KXZX2Dzgxp8/W959SKWDBWI/AAAAAAABPzg/rNCg1_jM-H8tCzVaE44KKr7fFILDu8PcgCLcBGAs/s400/hashigo_wood.png';
+      break;
+    case 3:
+      //. デジタルデータ風の背景素材（緑） https://www.irasutoya.com/2017/04/blog-post_62.html
+      imgs[i].src = 'https://3.bp.blogspot.com/-YtrWSqttYsQ/WM9XglY6dtI/AAAAAAABCrE/FKxvLU_Dllkg7PN1RV8xSys-7M86MS1vwCLcB/s550/bg_digital_pattern_green.jpg';
+      break;
+    case 4:
+      //. 石垣のイラスト（背景素材） https://www.irasutoya.com/2018/07/blog-post_333.html
+      imgs[i].src = 'https://2.bp.blogspot.com/-2GHF5yihAe4/WzC9Vv0X12I/AAAAAAABM3w/-VUqC6sA9oUNTcUdmrifKEL98J2raf_4QCLcBGAs/s600/bg_pattern_ishigaki.jpg';
+      break;
+    case 5:
+      //. スネークフルーツのイラスト https://www.irasutoya.com/2015/08/blog-post_972.html
+      imgs[i].src = 'https://3.bp.blogspot.com/-WXAP4rf3rBI/VcMlRoi4hhI/AAAAAAAAwYk/Ed6UHivguW4/s400/fruit_saraku.png';
+      break;
+    case 6:
+      //. もぐらのイラスト https://www.irasutoya.com/2013/01/blog-post_3363.html
+      imgs[i].src = 'https://3.bp.blogspot.com/-ovqmiEaRorA/UOKDDWaU39I/AAAAAAAAKLQ/m2iyIQ3yWuc/s1600/animal_mogura.png';
+      break;
+    }
+  }
 
   if( location.search && location.search.length > 1 ){
     var t = location.search.substr( 1 );
@@ -286,62 +330,34 @@ function displayBoard(){
   //. モールを描画
   drawMole( ctx, mx * w, my * h, w, h );
 
-  //. 終了判定
-  if( isCompleted() ){
-    alert( 'Clear!' );
-    stage ++;
-    if( stage < board.length ){
-      $('#select_stage').val( '' + stage );
+  setTimeout( function(){
+    //. 終了判定
+    if( isCompleted() ){
+      alert( 'Clear!' );
+      stage ++;
+      if( stage < board.length ){
+        $('#select_stage').val( '' + stage );
 
-      mx = my = pts = step = 0;
-      current_board = JSON.parse( JSON.stringify( board[stage] ) );
-      displayBoard();
-    }else{
-      alert( 'All Stages completed!!' );
+        mx = my = pts = step = 0;
+        current_board = JSON.parse( JSON.stringify( board[stage] ) );
+        displayBoard();
+      }else{
+        alert( 'All Stages completed!!' );
+      }
     }
-  }
+  }, 50 );
 }
 
 function drawPiece( ctx, piece, x, y, w, h ){
-  var img = new Image();
-  if( piece > 0 ){
-    img.onload = function(){
-      ctx.drawImage( img, 0, 0, img.width, img.height, x, y, w, h );
-    };
-    switch( piece ){
-    //case 0:
-    // img.src = '';
-    //  break;
-    case 1:  //. Door
-      //. いろいろな状態のドアのイラスト https://www.irasutoya.com/2016/07/blog-post_832.html
-      img.src = 'https://2.bp.blogspot.com/-6noe-4G5FNU/V2ubhr0UDKI/AAAAAAAA7pY/nHp2zGXHshkiwzUxYa5RQVf-pcwn31GSACLcB/s800/door_half_open.png';
-      break;
-    case 2:  //. Ladder
-      //. 木のはしごのイラスト https://www.irasutoya.com/2018/12/blog-post_0.html
-      img.src = 'https://4.bp.blogspot.com/-KXZX2Dzgxp8/W959SKWDBWI/AAAAAAABPzg/rNCg1_jM-H8tCzVaE44KKr7fFILDu8PcgCLcBGAs/s400/hashigo_wood.png';
-      break;
-    case 3:  //. mud
-      //. デジタルデータ風の背景素材（緑） https://www.irasutoya.com/2017/04/blog-post_62.html
-      img.src = 'https://3.bp.blogspot.com/-YtrWSqttYsQ/WM9XglY6dtI/AAAAAAABCrE/FKxvLU_Dllkg7PN1RV8xSys-7M86MS1vwCLcB/s550/bg_digital_pattern_green.jpg';
-      break;
-    case 4:  //. rock
-      //. 石垣のイラスト（背景素材） https://www.irasutoya.com/2018/07/blog-post_333.html
-      img.src = 'https://2.bp.blogspot.com/-2GHF5yihAe4/WzC9Vv0X12I/AAAAAAABM3w/-VUqC6sA9oUNTcUdmrifKEL98J2raf_4QCLcBGAs/s600/bg_pattern_ishigaki.jpg';
-      break;
-    case 5:  //. potato
-      //. スネークフルーツのイラスト https://www.irasutoya.com/2015/08/blog-post_972.html
-      img.src = 'https://3.bp.blogspot.com/-WXAP4rf3rBI/VcMlRoi4hhI/AAAAAAAAwYk/Ed6UHivguW4/s400/fruit_saraku.png';
-      break;
-    }
+  if( piece >= 0 ){
+    //. 0 だとサイズもゼロ？
+    //if( piece == 0 && y == 0 ){ alert( 'piece == y == 0 ' ); }
+    ctx.drawImage( imgs[piece], 0, 0, imgs[piece].width, imgs[piece].height, x, y, w, h );
   }
 }
+
 function drawMole( ctx, x, y, w, h ){
-  var img = new Image();
-  img.onload = function(){
-    ctx.drawImage( img, 0, 0, img.width, img.height, x, y, w, h );
-  };
-  //. もぐらのイラスト https://www.irasutoya.com/2013/01/blog-post_3363.html
-  img.src = 'https://3.bp.blogspot.com/-ovqmiEaRorA/UOKDDWaU39I/AAAAAAAAKLQ/m2iyIQ3yWuc/s1600/animal_mogura.png';
+  ctx.drawImage( imgs[6], 0, 0, imgs[6].width, imgs[6].height, x, y, w, h );
 }
 
 function retry(){
