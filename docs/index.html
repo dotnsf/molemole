@@ -129,8 +129,21 @@ $(function(){
       var t = t.split( '&' );
       t.forEach( function( tmp ){
         var param = tmp.split( '=' );
-        if( param.length == 2 && param[0] == 'file' ){
-          filename = param[1];
+        if( param.length == 2 ){
+          if( param[0] == 'file' ){
+            filename = param[1];
+          }else if( param[0] == 'board' ){
+            try{
+              var _board = JSON.parse( param[1] );
+              if( _board.length && _board[0].length && typeof _board[0][0] == 'number' ){
+                current_board = JSON.parse( JSON.stringify( _board ) );
+                board = [ _board ];
+                init();
+              }
+            }catch( e ){
+              console.log( e );
+            }
+          }
         }
       });
 
@@ -166,7 +179,6 @@ function init(){
     var opt = '<option value="' + i + '">' + i + '</option>';
     $('#select_stage').append( opt );
   }
-  $('#select_stage').val( '0' );
 
   //. ステージセレクト
   $('#select_stage').change( function(){
@@ -178,6 +190,7 @@ function init(){
     mx = my = pts = step = 0;
     displayBoard();
   });
+  $('#select_stage').val( '0' );
 
   //. キー入力
   document.body.onkeydown = function( e ){
