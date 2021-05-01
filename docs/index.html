@@ -33,7 +33,7 @@ html, body{
 | 4 | 石　　　　　　 |
 | 5 | いも　　　　　 |
 */
-var board = [
+var boards = [
   [
     [ 0, 0, 0, 1 ],
     [ 2, 3, 4, 2 ],
@@ -76,7 +76,7 @@ var board = [
     [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3 ]
   ]
 ];
-var current_board = JSON.parse( JSON.stringify( board[0] ) );
+var current_board = JSON.parse( JSON.stringify( boards[0] ) );
 var stage = 0;
 var step = 0;
 var pts = 0;
@@ -137,7 +137,8 @@ $(function(){
               var _board = JSON.parse( param[1] );
               if( _board.length && _board[0].length && typeof _board[0][0] == 'number' ){
                 current_board = JSON.parse( JSON.stringify( _board ) );
-                board = [ _board ];
+                boards = [ _board ];
+                mx = my = pts = step = 0;
                 init();
               }
             }catch( e ){
@@ -153,7 +154,7 @@ $(function(){
           url: './' + filename,
           success: function( body ){
             try{
-              board = JSON.parse( JSON.stringify( body ) );
+              boards = JSON.parse( JSON.stringify( body ) );
             }catch( e ){
             }
             init();
@@ -175,7 +176,7 @@ $(function(){
 });
 
 function init(){
-  for( var i = 0; i < board.length; i ++ ){
+  for( var i = 0; i < boards.length; i ++ ){
     var opt = '<option value="' + i + '">' + i + '</option>';
     $('#select_stage').append( opt );
   }
@@ -186,7 +187,7 @@ function init(){
     stage = parseInt( v );
     console.log( 'change: stage = ' + stage );
 
-    current_board = JSON.parse( JSON.stringify( board[stage] ) );
+    current_board = JSON.parse( JSON.stringify( boards[stage] ) );
     mx = my = pts = step = 0;
     displayBoard();
   });
@@ -348,11 +349,11 @@ function displayBoard(){
     if( isCompleted() ){
       alert( 'Clear!' );
       stage ++;
-      if( stage < board.length ){
+      if( stage < boards.length ){
         $('#select_stage').val( '' + stage );
 
         mx = my = pts = step = 0;
-        current_board = JSON.parse( JSON.stringify( board[stage] ) );
+        current_board = JSON.parse( JSON.stringify( boards[stage] ) );
         displayBoard();
       }else{
         alert( 'All Stages completed!!' );
@@ -376,7 +377,7 @@ function drawMole( ctx, x, y, w, h ){
 function retry(){
   if( confirm( 'Retry this stage?' ) ){
     mx = my = pts = step = 0;
-    current_board = JSON.parse( JSON.stringify( board[stage] ) );
+    current_board = JSON.parse( JSON.stringify( boards[stage] ) );
     displayBoard();
   }
 }
