@@ -309,7 +309,7 @@ function drawPrompt( ctx, x, y, w, h ){
 function play(){
   if( confirm( 'Play this stage?' ) ){
     var param = JSON.stringify( board ).split( ' ' ).join( '' );
-    location.href = '/?board=' + param;
+    location.href = './?board=' + param;
   }
 }
 
