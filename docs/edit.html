@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C/DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Mole Mole</title>
+<title>Mole Mole(Construction Mode)</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
@@ -33,55 +33,16 @@ html, body{
 | 4 | 石　　　　　　 |
 | 5 | いも　　　　　 |
 */
-var boards = [
-  [
+var board = [
     [ 0, 0, 0, 1 ],
-    [ 2, 3, 4, 2 ],
-    [ 2, 4, 4, 2 ],
+    [ 2, 0, 0, 2 ],
+    [ 2, 0, 0, 2 ],
     [ 2, 5, 5, 2 ]
-  ],
-  [
-    [ 0, 4, 4, 0 ],
-    [ 3, 3, 3, 3 ],
-    [ 3, 3, 3, 3 ],
-    [ 3, 3, 3, 1 ],
-    [ 2, 5, 5, 3 ]
-  ],
-  [
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 1, 3 ],
-    [ 3, 3, 3, 5, 3, 3, 2, 3, 3, 3, 3, 4, 3, 3, 3, 2, 3, 3, 3, 5 ],
-    [ 3, 3, 4, 3, 3, 4, 2, 3, 3, 3, 3, 4, 3, 3, 4, 4, 4, 4, 3, 3 ],
-    [ 3, 3, 4, 4, 3, 3, 2, 3, 3, 3, 3, 4, 3, 3, 4, 2, 3, 3, 3, 3 ],
-    [ 3, 3, 3, 4, 3, 3, 2, 3, 3, 3, 3, 4, 4, 4, 3, 2, 3, 3, 5, 4 ],
-    [ 3, 3, 3, 3, 3, 3, 2, 3, 3, 5, 4, 5, 3, 3, 3, 2, 3, 3, 3, 3 ],
-    [ 3, 3, 3, 3, 5, 3, 2, 3, 3, 4, 4, 3, 3, 4, 3, 2, 3, 3, 3, 3 ],
-    [ 3, 3, 3, 3, 2, 3, 4, 4, 4, 3, 4, 3, 3, 3, 4, 2, 3, 3, 3, 3 ],
-    [ 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 5, 3, 3, 3, 3, 2, 4, 3, 3, 3 ],
-    [ 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 3, 3 ],
-    [ 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 5, 3, 3, 3, 4, 4, 3 ]
-  ],
-  [
-    [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
-    [ 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 3, 3 ],
-    [ 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 2, 3, 3 ],
-    [ 3, 3, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 2, 3, 3 ],
-    [ 3, 3, 4, 3, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 3, 4, 2, 3, 3 ],
-    [ 3, 3, 4, 3, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 3, 4, 2, 3, 3 ],
-    [ 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 2, 3, 3 ],
-    [ 3, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 2, 3, 3 ],
-    [ 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 2, 3, 3 ],
-    [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3 ],
-    [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 1 ],
-    [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3 ]
-  ]
 ];
-var current_board = JSON.parse( JSON.stringify( boards[0] ) );
-var stage = 0;
-var step = 0;
-var pts = 0;
 var mx = 0;
 var my = 0;
+var W = 4;
+var H = 4;
 var imgs = new Array(7);
 $(function(){
   //. リサイズ時に Canvas サイズを変更する
@@ -130,15 +91,12 @@ $(function(){
       t.forEach( function( tmp ){
         var param = tmp.split( '=' );
         if( param.length == 2 ){
-          if( param[0] == 'file' ){
-            filename = param[1];
-          }else if( param[0] == 'board' ){
+          if( param[0] == 'board' ){
             try{
               var _board = JSON.parse( param[1] );
               if( _board.length && _board[0].length && typeof _board[0][0] == 'number' ){
-                current_board = JSON.parse( JSON.stringify( _board ) );
-                boards = [ _board ];
-                mx = my = pts = step = 0;
+                board = JSON.parse( JSON.stringify( _board ) );
+                mx = my = 0;
                 init();
               }
             }catch( e ){
@@ -147,26 +105,6 @@ $(function(){
           }
         }
       });
-
-      if( filename ){
-        $.ajax({
-          type: 'GET',
-          url: './' + filename,
-          success: function( body ){
-            try{
-              boards = JSON.parse( JSON.stringify( body ) );
-            }catch( e ){
-            }
-            init();
-          },
-          error: function( e0, e1, e2 ){
-            console.log( e0, e1, e2 );
-            init();
-          }
-        });
-      }else{
-        init();
-      }
     }else{
       init();
     }
@@ -176,26 +114,11 @@ $(function(){
 });
 
 function init(){
-  for( var i = 0; i < boards.length; i ++ ){
-    var opt = '<option value="' + i + '">' + i + '</option>';
-    $('#select_stage').append( opt );
-  }
-
-  //. ステージセレクト
-  $('#select_stage').change( function(){
-    var v = $(this).val();
-    stage = parseInt( v );
-    console.log( 'change: stage = ' + stage );
-
-    current_board = JSON.parse( JSON.stringify( boards[stage] ) );
-    mx = my = pts = step = 0;
-    displayBoard();
-  });
-  $('#select_stage').val( '0' );
-
   //. キー入力
   document.body.onkeydown = function( e ){
     var keys = {
+      13: 'enter',
+      32: 'space',
       37: 'left',
       38: 'up',
       39: 'right',
@@ -203,15 +126,50 @@ function init(){
     };
 
     if( typeof keys[e.keyCode] != 'undefined' ){
-      step ++;
-      keyPress( keys[e.keyCode] );
-      displayBoard();
+      if( e.shiftKey && 37 <= e.keyCode && e.keyCode <= 40 ){
+        shiftKeyPress( keys[e.keyCode] );
+      }else{
+        keyPress( keys[e.keyCode] );
+        displayBoard();
+      }
     }
   };
 }
 
+function shiftKeyPress( key ){
+  switch( key ){
+  case 'left':
+    if( W > 4 ){
+      W --;
+      init_board();
+    }
+    break;
+  case 'right':
+    if( W < 20 ){
+      W ++
+      init_board();
+    }
+    break;
+  case 'up':
+    if( H > 4 ){
+      H --;
+      init_board();
+    }
+    break;
+  case 'down':
+    if( H < 20 ){
+      H ++;
+      init_board();
+    }
+    break;
+  }
+}
+
 function keyPress( key ){
   switch( key ){
+  case 'space':
+    board[my][mx] = ( board[my][mx] + 1 ) % 6;
+    break;
   case 'left':
     if( canGo( mx-1, my ) ){
       go( mx-1, my );
@@ -236,65 +194,51 @@ function keyPress( key ){
 }
 
 function canGo( nx, ny ){
-  if( 0 <= nx && nx < current_board[0].length && 0 <= ny && ny < current_board.length ){
-    if( my - 1 == ny && current_board[my][mx] != 2 ){
-      //. 上方向への移動は階段を使わないといけない
-      return false;
-    }else{
-      if( current_board[ny][nx] == 4 ){
-        return false;
-      }else{
-        return true;
-      }
-    }
-  }else{
-    return false;
-  }
+  return ( 0 <= nx && nx < W && 0 <= ny && ny < H );
 }
 
 function go( nx, ny ){
-  //. 上に石があった場合は落ちてくる
-  var idx = 1;
-  //while( my > ( idx - 1 ) && current_board[my-idx][mx] == 4 ){
-  if( my > ( idx - 1 ) && current_board[my-idx][mx] == 4 ){
-    current_board[my-idx][mx] = 0;
-    current_board[my-idx+1][mx] = 4;
-    idx ++;
-  }
-
-  if( current_board[ny][nx] == 5 ){
-    //. 行き先が芋だった場合はカウント
-    pts ++;
-    current_board[ny][nx] = 0;
-  }else if( current_board[ny][nx] == 3 ){
-    //. 行き先がmudだった場合
-    current_board[ny][nx] = 0;
-  }
-
   mx = nx;
   my = ny;
-
-  //. 行った先がはしごでなく、その下に何もなかった場合
-  if( my + 1 < current_board.length && current_board[my][mx] != 2 && current_board[my+1][mx] == 0 ){
-    go( mx, my + 1 );
-  }
 }
 
-function isCompleted(){
-  if( current_board[my][mx] == 1 ){
-    var c = 0;
-    for( var i = 0; i < current_board.length; i ++ ){
-      for( var j = 0; j < current_board[0].length; j ++ ){
-        if( current_board[i][j] == 5 ){
-          c ++;
-        }
+function init_board(){
+  /*
+  board = [
+    [ 0, 0, 0, 1 ],
+    [ 2, 0, 0, 2 ],
+    [ 2, 0, 0, 2 ],
+    [ 2, 5, 5, 2 ]
+  ];
+  */
+  board = [];
+  for( var i = 0; i < H; i ++ ){
+    var row = [];
+    if( i == 0 ){
+      for( var j = 0; j < W - 1; j ++ ){
+        row.push( 0 );
       }
+      row.push( 1 );
+    }else if( i == H - 1 ){
+      row.push( 2 );
+      for( var j = 1; j < W - 1; j ++ ){
+        row.push( 5 );
+      }
+      row.push( 2 );
+    }else{
+      row.push( 2 );
+      for( var j = 1; j < W - 1; j ++ ){
+        row.push( 0 );
+      }
+      row.push( 2 );
     }
 
-    return ( c == 0 );
-  }else{
-    return false;
+    board.push( row );
   }
+
+  mx = 0;
+  my = 0;
+  displayBoard();
 }
 
 function resized(){
@@ -310,9 +254,6 @@ function resized(){
 }
 
 function displayBoard(){
-  $('#step').html( step );
-  $('#pts').html( pts );
-
   //. 画面描画準備
   var canvas = document.getElementById( 'mycanvas' );
   if( !canvas || !canvas.getContext ){
@@ -321,8 +262,8 @@ function displayBoard(){
   var ctx = canvas.getContext( '2d' );
 
   //. ボードサイズと、各コマのサイズを確認
-  var board_height = current_board.length;
-  var board_width = current_board[0].length;
+  var board_height = H; //board.length;
+  var board_width = W; //board[0].length;
 
   //. 全体をベタ塗り
   ctx.beginPath();
@@ -337,29 +278,15 @@ function displayBoard(){
     var y = h * i;
     for( var j = 0; j < board_width; j ++ ){
       var x = w * j;
-      drawPiece( ctx, current_board[i][j], x, y, w, h );
+      drawPiece( ctx, board[i][j], x, y, w, h );
     }
   }
 
+  //. プロンプトを描画
+  drawPrompt( ctx, mx * w, my * h, w, h );
+
   //. モールを描画
-  drawMole( ctx, mx * w, my * h, w, h );
-
-  setTimeout( function(){
-    //. 終了判定
-    if( isCompleted() ){
-      alert( 'Clear!' );
-      stage ++;
-      if( stage < boards.length ){
-        $('#select_stage').val( '' + stage );
-
-        mx = my = pts = step = 0;
-        current_board = JSON.parse( JSON.stringify( boards[stage] ) );
-        displayBoard();
-      }else{
-        alert( 'All Stages completed!!' );
-      }
-    }
-  }, 50 );
+  //drawMole( ctx, 0, 0, w, h );
 }
 
 function drawPiece( ctx, piece, x, y, w, h ){
@@ -374,23 +301,22 @@ function drawMole( ctx, x, y, w, h ){
   ctx.drawImage( imgs[6], 0, 0, imgs[6].width, imgs[6].height, x, y, w, h );
 }
 
-function retry(){
-  if( confirm( 'Retry this stage?' ) ){
-    mx = my = pts = step = 0;
-    current_board = JSON.parse( JSON.stringify( boards[stage] ) );
-    displayBoard();
-  }
+function drawPrompt( ctx, x, y, w, h ){
+  ctx.strokeStyle = "rgb(255,255,255)";
+  ctx.strokeRect( x, y, w, h );
 }
 
-function edit(){
-  //var param = JSON.stringify( board ).split( ' ' ).join( '' );
-  location.href = '/edit.html';
+function play(){
+  if( confirm( 'Play this stage?' ) ){
+    var param = JSON.stringify( board ).split( ' ' ).join( '' );
+    location.href = '/?board=' + param;
+  }
 }
 
 function debug(){
   console.log( 'stage = ' + stage + ', cnt = ' + cnt + ', step = ' + step );
   console.log( 'mx = ' + mx + ', my = ' + my );
-  console.log( current_board );
+  console.log( board );
 }
 </script>
 </head>
@@ -398,26 +324,12 @@ function debug(){
 
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">molemole</a>
-  <ul class="navbar-nav mr-auto">
-    <li id="sec">
-      Stages:
-      <select id="select_stage">
-      </select>
-    </li>
-  </ul>
+  <ul class="navbar-nav mr-auto"></ul>
   <ul class="navbar-nav" id="navbar">
-    <li>
-      <button class="btn btn-warning" onClick="edit();">edit</button>
+    <li id="sec">
     </li>
   </ul>
 </nav>
-
-<table class="table">
-  <tr>
-    <td><div class="text-left">Pts: <span id="pts"></span></div></td>
-    <td><div class="text-right">Step: <span id="step"></span></div></td>
-  </tr>
-</table>
 
 <div id="canvas_div">
   <div id="cdiv">
@@ -425,7 +337,7 @@ function debug(){
   </div>
 </div>
 
-<button class="btn btn-warning" onClick="retry();">retry</button>
+<button class="btn btn-warning" onClick="play();">play</button>
 <!--
 <button class="btn btn-success" onClick="debug();">debug</button>
 -->
